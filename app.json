@@ -1,0 +1,12 @@
+{
+  "name": "PizzaRoulette",
+  "displayName": "PizzaRoulette",
+  "expo": {
+    "name": "PizzaRoulette",
+    "slug": "expo-template-bare",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
