@@ -6,6 +6,11 @@ import axios from 'axios';
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/getPizzas'
 
 export default class GestureSpinnerWheel extends Component {
+  state = {
+    selectedRestaurant: null,
+    selectIndex: null
+  }
+
   componentDidMount = () => {
     axios.get(API_URL)
       .then(res => console.log(res.data))
@@ -27,6 +32,11 @@ export default class GestureSpinnerWheel extends Component {
           backgroundColor={"#c0392b"}
           getWinner={(value, index) => this.setState({ selectedRestaurant: value, selectedIndex: index })}
         />
+        {this.state.selectedRestaurant
+          && <View style={{ paddingBottom: 100 }}>
+            <Text>{this.state.selectedRestaurant}</Text>
+          </View>
+        }
       </View>
     )
   }
