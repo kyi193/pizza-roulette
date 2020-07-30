@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableWithoutFeedback, TextInput, Keyboard, Dimensions, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+import { submitZipcode } from '../actions'
 
 const ZipCodeSubmitButton = ({ onPress }) => {
   return (
@@ -25,6 +27,14 @@ class UserInputScreen extends Component {
     }))
   }
 
+  submitZipcode = () => {
+    const { dispatch } = this.props
+    dispatch(submitZipcode(this.state.zipCode))
+    this.setState(() => ({
+      zipCode: null
+    }))
+  }
+
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -36,7 +46,7 @@ class UserInputScreen extends Component {
             value={this.state.zipCode}
             placeholder="Enter zip code here..."
           />
-          <ZipCodeSubmitButton />
+          <ZipCodeSubmitButton onPress={this.submitZipcode} />
         </View>
       </TouchableWithoutFeedback>
     )
@@ -74,4 +84,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default UserInputScreen
+export default connect()(UserInputScreen)
