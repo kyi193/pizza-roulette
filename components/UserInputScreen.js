@@ -1,5 +1,17 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableWithoutFeedback, TextInput, Keyboard, Dimensions } from 'react-native'
+import { Text, View, StyleSheet, TouchableWithoutFeedback, TextInput, Keyboard, Dimensions, TouchableOpacity } from 'react-native'
+
+const ZipCodeSubmitButton = ({ onPress }) => {
+  return (
+    <View>
+      <TouchableOpacity
+        style={styles.submitButton}
+        onPress={onPress}>
+        <Text style={styles.submitButtonText}>Submit</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
 
 class UserInputScreen extends Component {
   state = {
@@ -24,6 +36,7 @@ class UserInputScreen extends Component {
             value={this.state.zipCode}
             placeholder="Enter zip code here..."
           />
+          <ZipCodeSubmitButton />
         </View>
       </TouchableWithoutFeedback>
     )
@@ -45,6 +58,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     padding: 5,
+  },
+  submitButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: 80,
+    backgroundColor: 'red',
+    borderRadius: 60,
+    marginLeft: 10,
+  },
+  submitButtonText: {
+    color: 'yellow',
+    fontWeight: 'bold'
   }
 })
 
