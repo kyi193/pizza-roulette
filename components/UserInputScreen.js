@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableWithoutFeedback, TextInput, Keyboard, Dimensions, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, TouchableWithoutFeedback, TextInput, Keyboard, Dimensions, TouchableOpacity, ImageBackground } from 'react-native'
 import { connect } from 'react-redux'
 import { submitZipcode } from '../actions'
+
+const backgroundImage = { uri: "https://i.imgur.com/Fr2tPr1.png" }
 
 const ZipCodeSubmitButton = ({ onPress }) => {
   return (
@@ -37,18 +39,20 @@ class UserInputScreen extends Component {
 
   render() {
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <TextInput
-            style={styles.inputField}
-            keyboardType='numeric'
-            onChangeText={text => this.onChangeZipcode(text)}
-            value={this.state.zipCode}
-            placeholder="Enter zip code here..."
-          />
-          <ZipCodeSubmitButton onPress={this.submitZipcode} />
-        </View>
-      </TouchableWithoutFeedback>
+      <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
+            <TextInput
+              style={styles.inputField}
+              keyboardType='numeric'
+              onChangeText={text => this.onChangeZipcode(text)}
+              value={this.state.zipCode}
+              placeholder="Enter zip code here..."
+            />
+            <ZipCodeSubmitButton onPress={this.submitZipcode} />
+          </View>
+        </TouchableWithoutFeedback>
+      </ImageBackground>
     )
   }
 }
@@ -68,6 +72,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     padding: 5,
+    borderRadius: 4,
+    backgroundColor: 'white',
+    borderWidth: 2,
   },
   submitButton: {
     justifyContent: 'center',
@@ -81,6 +88,10 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: 'yellow',
     fontWeight: 'bold'
+  },
+  backgroundImage: {
+    width: '100%',
+    height: '100%'
   }
 })
 
