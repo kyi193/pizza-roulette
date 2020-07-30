@@ -41,15 +41,20 @@ class UserInputScreen extends Component {
     return (
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.container}>
-            <TextInput
-              style={styles.inputField}
-              keyboardType='numeric'
-              onChangeText={text => this.onChangeZipcode(text)}
-              value={this.state.zipCode}
-              placeholder="Enter zip code here..."
-            />
-            <ZipCodeSubmitButton onPress={this.submitZipcode} />
+          <View>
+            <View style={styles.logo}>
+              <Text style={styles.logoText}>Pizza Roulette</Text>
+            </View>
+            <View style={styles.container}>
+              <TextInput
+                style={styles.inputField}
+                keyboardType='numeric'
+                onChangeText={text => this.onChangeZipcode(text)}
+                value={this.state.zipCode}
+                placeholder="Enter zip code here..."
+              />
+              <ZipCodeSubmitButton onPress={this.submitZipcode} />
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </ImageBackground>
@@ -63,15 +68,14 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 20,
   },
   inputField: {
-    height: 40,
-    width: 200,
+    height: 50,
+    width: 225,
     borderWidth: 1,
     borderColor: 'black',
-    padding: 5,
+    padding: 10,
     borderRadius: 4,
     backgroundColor: 'white',
     borderWidth: 2,
@@ -79,8 +83,8 @@ const styles = StyleSheet.create({
   submitButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 40,
-    width: 80,
+    height: 50,
+    width: 100,
     backgroundColor: 'red',
     borderRadius: 60,
     marginLeft: 10,
@@ -92,6 +96,25 @@ const styles = StyleSheet.create({
   backgroundImage: {
     width: '100%',
     height: '100%'
+  },
+  logo: {
+    marginTop: 80,
+    marginBottom: 150,
+    backgroundColor: 'white',
+    height: 120,
+    width: 300,
+    borderRadius: 15,
+    borderWidth: 15,
+    borderColor: 'brown',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: 'orange'
+  },
+  logoText: {
+    fontSize: 40,
+    fontFamily: 'Noteworthy-Bold',
+    color: 'white'
   }
 })
 
