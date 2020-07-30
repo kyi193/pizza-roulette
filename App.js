@@ -2,13 +2,20 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import GestureSpinnerWheel from './components/GestureSpinnerWheel'
+import { Provider } from 'react-redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import { createStore } from 'redux'
+import reducer from './reducers'
+import middleware from './middleware'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <GestureSpinnerWheel />
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={createStore(reducer, composeWithDevTools(middleware))}>
+      <View style={styles.container}>
+        <GestureSpinnerWheel />
+        <StatusBar style="auto" />
+      </View>
+    </Provider>
   );
 }
 
