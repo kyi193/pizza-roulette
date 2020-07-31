@@ -17,7 +17,7 @@ const ZipCodeSubmitButton = ({ onPress }) => {
   )
 }
 
-class UserInputScreen extends Component {
+export class UserInputScreen extends Component {
   state = {
     zipCode: null
   }
