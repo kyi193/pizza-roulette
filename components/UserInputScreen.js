@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableWithoutFeedback, TextInput, Keyboard, Dimensions, TouchableOpacity, ImageBackground } from 'react-native'
+import { Text, View, StyleSheet, TouchableWithoutFeedback, TextInput, Keyboard, Dimensions, TouchableOpacity, ImageBackground, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { submitZipcode } from '../actions'
 
@@ -29,13 +29,35 @@ export class UserInputScreen extends Component {
     }))
   }
 
+  isValidZipcode = (zipCode) => {
+    if (zipCode === null) return false
+    if (zipCode.length < 5 || zipCode.length > 5) return false
+    if (!(/^\d+$/.test(zipCode))) return false
+
+    return true
+  }
+
   submitZipcode = () => {
     const { dispatch } = this.props
-    dispatch(submitZipcode(this.state.zipCode))
+    const { zipCode } = this.state
+
+    if (this.isValidZipcode(zipCode)) {
+      dispatch(submitZipcode(this.state.zipCode))
+      this.props.navigation.navigate('Gesture Spinner Wheel')
+    } else {
+      Alert.alert(
+        "Invalid Zipcode",
+        "Please enter a valid 5-digit zipcode",
+        [
+          { text: "OK" }
+        ],
+        { cancelable: false }
+      );
+    }
+
     this.setState(() => ({
       zipCode: null
     }))
-    this.props.navigation.navigate('Gesture Spinner Wheel')
   }
 
   render() {

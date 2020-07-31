@@ -25,4 +25,34 @@ describe("UserInputScreen component", () => {
     instanceOf.onChangeZipcode(12345)
     expect(typeof instanceOf.state.zipCode).toEqual('string')
   })
+
+  test("this.state.zipCode should be null with zipcode length less than 5", () => {
+    const instanceOf = renderer.create(<UserInputScreen />).getInstance()
+    instanceOf.isValidZipcode(1)
+    expect(instanceOf.state.zipCode).toEqual(null)
+  })
+
+  test("this.state.zipCode should be null with zipcode length greater than 5", () => {
+    const instanceOf = renderer.create(<UserInputScreen />).getInstance()
+    instanceOf.isValidZipcode(123456)
+    expect(instanceOf.state.zipCode).toEqual(null)
+  })
+
+  test("this.state.zipCode should be null if zipcode is negative", () => {
+    const instanceOf = renderer.create(<UserInputScreen />).getInstance()
+    instanceOf.isValidZipcode(-10001)
+    expect(instanceOf.state.zipCode).toEqual(null)
+  })
+
+  test("this.state.zipCode should be null if zipcode contains a letter", () => {
+    const instanceOf = renderer.create(<UserInputScreen />).getInstance()
+    instanceOf.isValidZipcode('-10O01')
+    expect(instanceOf.state.zipCode).toEqual(null)
+  })
+
+  test("this.state.zipCode should be null if zipcode contains special characters", () => {
+    const instanceOf = renderer.create(<UserInputScreen />).getInstance()
+    instanceOf.isValidZipcode('!314@')
+    expect(instanceOf.state.zipCode).toEqual(null)
+  })
 })
