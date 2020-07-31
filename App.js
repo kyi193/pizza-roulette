@@ -2,19 +2,37 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import UserInputScreen from './components/UserInputScreen'
+import GestureSpinnerWheel from './components/GestureSpinnerWheel'
 import { Provider } from 'react-redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createStore } from 'redux'
 import reducer from './reducers'
 import middleware from './middleware'
+import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from '@react-navigation/native'
+
+const Stack = createStackNavigator();
+const MainNav = () => (
+  <Stack.Navigator headerMode="none">
+    <Stack.Screen
+      name="User Input Screen"
+      component={UserInputScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="Gesture Spinner Wheel"
+      component={GestureSpinnerWheel}
+    />
+  </Stack.Navigator>
+);
 
 export default function App() {
   return (
     <Provider store={createStore(reducer, composeWithDevTools(middleware))}>
-      <View style={styles.container}>
-        <UserInputScreen />
+      <NavigationContainer>
+        <MainNav />
         <StatusBar style="auto" />
-      </View>
+      </NavigationContainer>
     </Provider>
   );
 }
