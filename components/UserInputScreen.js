@@ -35,6 +35,7 @@ export class UserInputScreen extends Component {
     this.setState(() => ({
       zipCode: null
     }))
+    this.props.navigation.navigate('Gesture Spinner Wheel')
   }
 
   render() {
