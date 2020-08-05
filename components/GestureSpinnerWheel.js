@@ -19,7 +19,7 @@ export default class GestureSpinnerWheel extends Component {
   render() {
     const restaurants = ['Joe\'s', 'Rays', '2Bros', 'Dominos', '&Pizza', '$1Pizza']
     return (
-      <View>
+      <View style={styles.container}>
         <WheelOfFortune
           onRef={ref => (this.child = ref)}
           rewards={restaurants}
@@ -41,3 +41,9 @@ export default class GestureSpinnerWheel extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+})
