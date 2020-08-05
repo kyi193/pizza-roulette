@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import WheelOfFortune from 'react-native-wheel-of-fortune'
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/getPizzas'
 
-export default class GestureSpinnerWheel extends Component {
+export class GestureSpinnerWheel extends Component {
   state = {
     selectedRestaurant: null,
     selectIndex: null
@@ -41,6 +42,14 @@ export default class GestureSpinnerWheel extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    zipCode: state.zipCode
+  }
+}
+
+export default connect(mapStateToProps)(GestureSpinnerWheel)
 
 const styles = StyleSheet.create({
   container: {
