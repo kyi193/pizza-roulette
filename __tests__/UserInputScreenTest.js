@@ -5,6 +5,7 @@ import configureStore from 'redux-mock-store';
 import { submitZipcode, SUBMIT_ZIPCODE } from '../actions'
 
 describe("UserInputScreen component", () => {
+  jest.useFakeTimers()
   test("renders", () => {
     const rendered = renderer.create(<UserInputScreen />).toJSON()
     expect(rendered).toBeTruthy()
@@ -31,6 +32,7 @@ describe("UserInputScreen component", () => {
   })
 
   describe("isValidZipcode", () => {
+    jest.useFakeTimers()
     test("this.state.zipCode should be null with zipcode length less than 5", () => {
       const instanceOf = renderer.create(<UserInputScreen />).getInstance()
       instanceOf.isValidZipcode(1)
@@ -63,6 +65,7 @@ describe("UserInputScreen component", () => {
   })
 
   describe("submitZipcode", () => {
+    jest.useFakeTimers()
     describe("Valid zipcode", () => {
       it("should dispatch submitZipcode", () => {
         const instanceOf = renderer.create(<UserInputScreen />).getInstance()

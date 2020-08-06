@@ -5,9 +5,9 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 
 describe("GestureSpinnerWheel component", () => {
-  test("renders", () => {
-    const rendered = renderer.create(<GestureSpinnerWheel />).toJSON()
+  it('renders correctly', async () => {
+    jest.useFakeTimers()
+    renderer.create(<GestureSpinnerWheel />);
+  });
 
-    expect(rendered).toBeTruthy()
-  })
 })
