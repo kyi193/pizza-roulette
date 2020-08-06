@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import UserInputScreen from './components/UserInputScreen'
 import GestureSpinnerWheel from './components/GestureSpinnerWheel'
+import WinnerScreen from './components/WinnerScreen'
 import { Provider } from 'react-redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { createStore } from 'redux'
@@ -22,6 +23,10 @@ const MainNav = () => (
     <Stack.Screen
       name="Gesture Spinner Wheel"
       component={GestureSpinnerWheel}
+    />
+    <Stack.Screen
+      name="Winner Screen"
+      component={WinnerScreen}
     />
   </Stack.Navigator>
 );
