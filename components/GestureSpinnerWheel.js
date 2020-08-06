@@ -78,6 +78,7 @@ export class GestureSpinnerWheel extends Component {
                   selectedRestaurant: value,
                   selectedIndex: index
                 })
+                this.props.navigation.navigate('Winner Screen')
               }}
             />
             {this.state.selectedRestaurant
