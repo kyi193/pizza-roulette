@@ -7,7 +7,8 @@ const reducer = (state = {}, action) => {
       return state
     }
     case SUBMIT_RESTAURANT: {
-      state['restaurant'] = action.restaurant
+      state['restaurant'] = action.restaurantName
+      state['id'] = action.restaurantID
       return state
     }
     default:
