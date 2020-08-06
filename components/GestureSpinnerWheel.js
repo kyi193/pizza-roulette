@@ -31,7 +31,7 @@ export class GestureSpinnerWheel extends Component {
   }
 
   selectRandomBusinesses = (businessList) => {
-    let businessArr = businessList.map(business => [business.name.slice(0, 5), business.name])
+    let businessArr = businessList.map(business => [business.name.slice(0, 5), business.name, business.id])
     return this.shuffle(businessArr).splice(0, 8)
   }
 
@@ -50,9 +50,9 @@ export class GestureSpinnerWheel extends Component {
     return businessList;
   }
 
-  submitRestaurant = (restaurant) => {
+  submitRestaurant = (restaurantName, restaurantID) => {
     const { dispatch } = this.props
-    dispatch(submitRestaurant(restaurant))
+    dispatch(submitRestaurant(restaurantName, restaurantID))
   }
 
   render() {
@@ -72,8 +72,9 @@ export class GestureSpinnerWheel extends Component {
               textColor={"#FFFFFF"}
               backgroundColor={"#c0392b"}
               getWinner={(value, index) => {
-                const restaurant = this.state.businessList[index][1]
-                this.submitRestaurant(restaurant)
+                const restaurantName = this.state.businessList[index][1]
+                const restaurantID = this.state.businessList[index][2]
+                this.submitRestaurant(restaurantName, restaurantID)
                 this.setState({
                   selectedRestaurant: value,
                   selectedIndex: index

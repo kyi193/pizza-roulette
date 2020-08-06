@@ -8,9 +8,10 @@ export function submitZipcode(zipCode) {
   }
 }
 
-export function submitRestaurant(restaurant) {
+export function submitRestaurant(restaurantName, restaurantID) {
   return {
     type: SUBMIT_RESTAURANT,
-    restaurant
+    restaurantName,
+    restaurantID
   }
 }
