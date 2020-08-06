@@ -20,4 +20,11 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect()(WinnerScreen)
+function mapStateToProps(state) {
+  return {
+    restaurant: state.restaurant,
+    id: state.id
+  }
+}
+
+export default connect(mapStateToProps)(WinnerScreen)
