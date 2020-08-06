@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import WheelOfFortune from 'react-native-wheel-of-fortune'
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { submitRestaurant } from '../actions'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/getRestaurants'
 
@@ -49,9 +50,13 @@ export class GestureSpinnerWheel extends Component {
     return businessList;
   }
 
+  submitRestaurant = (restaurant) => {
+    const { dispatch } = this.props
+    dispatch(submitRestaurant(restaurant))
+  }
+
   render() {
     const restaurants = this.state.businessList.map(business => business[0])
-    console.log(restaurants)
     return (
       this.state.loaded
         ? (
@@ -66,7 +71,14 @@ export class GestureSpinnerWheel extends Component {
               innerRadius={10}
               textColor={"#FFFFFF"}
               backgroundColor={"#c0392b"}
-              getWinner={(value, index) => this.setState({ selectedRestaurant: value, selectedIndex: index })}
+              getWinner={(value, index) => {
+                const restaurant = this.state.businessList[index][1]
+                this.submitRestaurant(restaurant)
+                this.setState({
+                  selectedRestaurant: value,
+                  selectedIndex: index
+                })
+              }}
             />
             {this.state.selectedRestaurant
               && <View style={{ paddingBottom: 100 }}>
