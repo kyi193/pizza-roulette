@@ -1,8 +1,40 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
+import axios from 'axios';
+
+const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
 
 export class WinnerScreen extends Component {
+  state = {
+    restaurantName: this.props.restaurantName,
+    id: this.props.id,
+    url: null,
+    phoneNumber: null,
+    rating: null,
+    location: null,
+    price: null,
+    loaded: false
+  }
+
+  componentDidMount = () => {
+    const id = this.state.id
+    axios.get(`${API_URL}/${id}`)
+      .then(res => {
+        const business = res.data.business
+        const { url, phone, rating, location, price } = business
+        this.setState(() => ({
+          url,
+          phoneNumber: phone,
+          rating,
+          location,
+          price,
+          loaded: true
+        }))
+      })
+      .catch(error => console.log(error))
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -22,7 +54,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-    restaurant: state.restaurant,
+    restaurantName: state.restaurant,
     id: state.id
   }
 }
