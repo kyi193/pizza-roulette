@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { Header } from 'react-native-elements'
 import { generateUID } from '../utils/helpers'
-import { Entypo, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import { Entypo, MaterialCommunityIcons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
 const FULL_PIZZA = { uri: 'https://i.imgur.com/2Zxn2Cq.png' }
@@ -80,6 +80,10 @@ export class WinnerScreen extends Component {
     Linking.openURL(url).catch((err) => console.error('An error occurred', err));
   }
 
+  goHome = () => {
+    this.props.navigation.navigate("User Input Screen")
+  }
+
   render() {
     const { restaurantName, url, phoneNumber, rating, price, pizzaRatingArr, photo, reviews } = this.state
     return (
@@ -87,6 +91,11 @@ export class WinnerScreen extends Component {
         ? (
           <View style={styles.container}>
             <Header
+              leftComponent={
+                <TouchableOpacity onPress={() => this.goHome()}>
+                  <MaterialIcons name="home" size={30} color="white" />
+                </TouchableOpacity>
+              }
               centerComponent={
                 <View>
                   <Text style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }}>Pizza Roulette</Text>
