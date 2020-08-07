@@ -87,25 +87,27 @@ export class WinnerScreen extends Component {
                 }
               }
             />
-            <View style={styles.title}>
-              <Text style={styles.restaurantName}>{restaurantName}</Text>
-              <View style={styles.pizzaRatingContainer}>
-                {pizzaRatingArr.map(url => {
-                  return (
-                    <Image key={generateUID()} source={url} style={styles.pizzaRating} />
-                  )
-                })}
-                <Text style={styles.pizzaRatingText}>({rating} Slices)</Text>
+            <View style={styles.content}>
+              <View style={styles.title}>
+                <Text style={styles.restaurantName}>{restaurantName}</Text>
+                <View style={styles.pizzaRatingContainer}>
+                  {pizzaRatingArr.map(url => {
+                    return (
+                      <Image key={generateUID()} source={url} style={styles.pizzaRating} />
+                    )
+                  })}
+                  <Text style={styles.pizzaRatingText}>({rating} Slices)</Text>
+                </View>
               </View>
-            </View>
-            <View style={styles.pizzaRatingContainer}>
-              <Text style={styles.price}>{price}</Text>
-              <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
-            </View>
-            <View style={styles.phoneNumberContainer}>
-              <TouchableOpacity onPress={() => this.dialCall(phoneNumber)} activeOpacity={0.7} style={styles.button} >
-                <Text style={styles.phoneNumberText}>Call us now</Text>
-              </TouchableOpacity>
+              <View style={styles.pizzaRatingContainer}>
+                <Text style={styles.price}>{price}</Text>
+                <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
+              </View>
+              <View style={styles.phoneNumberContainer}>
+                <TouchableOpacity onPress={() => this.dialCall(phoneNumber)} activeOpacity={0.7} style={styles.button} >
+                  <Text style={styles.phoneNumberText}>Call us now</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         )
@@ -165,6 +167,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     textAlign: 'center',
+  },
+  content: {
+    padding: 8
   }
 })
 
