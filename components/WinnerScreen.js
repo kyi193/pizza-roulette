@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { Header } from 'react-native-elements'
 import { generateUID } from '../utils/helpers'
-import { Entypo } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
 const FULL_PIZZA = { uri: 'https://i.imgur.com/2Zxn2Cq.png' }
@@ -84,6 +83,12 @@ export class WinnerScreen extends Component {
         ? (
           <View style={styles.container}>
             <Header
+              centerComponent={
+                <View>
+                  <Text style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }}>Pizza Roulette</Text>
+                </View>
+              }
+              rightComponent={<FontAwesome5 name="pizza-slice" size={24} color="#FFDF00" />}
               containerStyle={
                 {
                   backgroundColor: '#FF4900',
@@ -148,7 +153,7 @@ const styles = StyleSheet.create({
   },
   restaurantName: {
     fontSize: 30,
-    fontWeight: '900'
+    fontWeight: '900',
   },
   pizzaRatingContainer: {
     flexDirection: 'row'
