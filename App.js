@@ -27,6 +27,7 @@ const MainNav = () => (
     <Stack.Screen
       name="Winner Screen"
       component={WinnerScreen}
+      options={{ gestureEnabled: false }}
     />
   </Stack.Navigator>
 );
