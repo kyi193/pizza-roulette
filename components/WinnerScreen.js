@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { Header } from 'react-native-elements'
 import { generateUID } from '../utils/helpers'
+import { Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
 const FULL_PIZZA = { uri: 'https://i.imgur.com/2Zxn2Cq.png' }
@@ -107,20 +109,26 @@ export class WinnerScreen extends Component {
                 <Text style={styles.price}>{price}</Text>
                 <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
               </View>
-              <View style={styles.locationContainer}>
-                <Text style={styles.locationText}>{this.state.location.address1}</Text>
-                <Text style={styles.locationText}>{`${this.state.location.city}, ${this.state.location.state}`}</Text>
-                <Text style={styles.locationText}>{this.state.location.postal_code}</Text>
-              </View>
-              <View style={styles.phoneNumberContainer}>
-                <TouchableOpacity onPress={() => this.dialCall(phoneNumber)} activeOpacity={0.7} style={styles.callButton} >
-                  <Text style={styles.phoneNumberText}>Call us now</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.phoneNumberContainer}>
-                <TouchableOpacity onPress={() => this.openURL(url)} activeOpacity={0.7} style={styles.urlButton} >
-                  <Text style={styles.phoneNumberText}>Visit our Yelp page</Text>
-                </TouchableOpacity>
+              <View style={styles.locationButtonSection}>
+                <View style={styles.locationContainer}>
+                  <Text style={styles.locationText}>{this.state.location.address1}</Text>
+                  <Text style={styles.locationText}>{`${this.state.location.city}, ${this.state.location.state}`}</Text>
+                  <Text style={styles.locationText}>{this.state.location.postal_code}</Text>
+                </View>
+                <View>
+                  <View style={styles.phoneNumberContainer}>
+                    <MaterialCommunityIcons name="cellphone" size={35} color="black" style={styles.phoneIcon} />
+                    <TouchableOpacity onPress={() => this.dialCall(phoneNumber)} activeOpacity={0.7} style={styles.callButton} >
+                      <Text style={styles.phoneNumberText}>Call us now</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.phoneNumberContainer}>
+                    <Entypo name="yelp" size={35} color="red" style={styles.yelpIcon} />
+                    <TouchableOpacity onPress={() => this.openURL(url)} activeOpacity={0.7} style={styles.urlButton} >
+                      <Text style={styles.phoneNumberText}>Yelp page</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
@@ -166,24 +174,23 @@ const styles = StyleSheet.create({
   },
   phoneNumberContainer: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   callButton: {
-    width: '55%',
+    width: 120,
     padding: 6,
     backgroundColor: '#FF6F00',
     borderRadius: 7,
-    marginRight: 15,
     height: 40,
     justifyContent: 'center',
-    marginBottom: 10
+    marginBottom: 10,
   },
   urlButton: {
-    width: '55%',
+    width: 120,
     padding: 6,
     backgroundColor: 'red',
     borderRadius: 7,
-    marginRight: 15,
     height: 40,
     justifyContent: 'center',
   },
@@ -200,6 +207,23 @@ const styles = StyleSheet.create({
   },
   locationContainer: {
     marginTop: 10
+  },
+  urlText: {
+    fontSize: 12
+  },
+  locationButtonSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 15,
+    borderTopWidth: 5,
+    paddingTop: 12
+  },
+  phoneIcon: {
+    marginBottom: 10,
+    marginRight: 10
+  },
+  yelpIcon: {
+    marginRight: 10
   }
 })
 
