@@ -103,6 +103,11 @@ export class WinnerScreen extends Component {
                 <Text style={styles.price}>{price}</Text>
                 <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
               </View>
+              <View style={styles.locationContainer}>
+                <Text style={styles.locationText}>{this.state.location.address1}</Text>
+                <Text style={styles.locationText}>{`${this.state.location.city}, ${this.state.location.state}`}</Text>
+                <Text style={styles.locationText}>{this.state.location.postal_code}</Text>
+              </View>
               <View style={styles.phoneNumberContainer}>
                 <TouchableOpacity onPress={() => this.dialCall(phoneNumber)} activeOpacity={0.7} style={styles.button} >
                   <Text style={styles.phoneNumberText}>Call us now</Text>
@@ -170,6 +175,12 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 8
+  },
+  locationText: {
+    fontSize: 18
+  },
+  locationContainer: {
+    marginTop: 10
   }
 })
 
