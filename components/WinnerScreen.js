@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Header } from 'react-native-elements'
+import { generateUID } from '../utils/helpers'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
+const FULL_PIZZA = { uri: 'https://i.imgur.com/2Zxn2Cq.png' }
+const HALF_PIZZA = { uri: 'https://i.imgur.com/tljEnPj.png' }
 
 export class WinnerScreen extends Component {
   state = {
@@ -15,7 +18,8 @@ export class WinnerScreen extends Component {
     rating: null,
     location: null,
     price: null,
-    loaded: false
+    loaded: false,
+    pizzaRatingArr: null
   }
 
   componentDidMount = () => {
@@ -24,19 +28,33 @@ export class WinnerScreen extends Component {
       .then(res => {
         const business = res.data.business
         const { url, phone, rating, location, price } = business
+        const pizzaRatingArr = this.loadPizzaRating(rating)
         this.setState(() => ({
           url,
           phoneNumber: phone,
           rating,
           location,
           price,
-          loaded: true
+          loaded: true,
+          pizzaRatingArr
         }))
       })
       .catch(error => console.log(error))
   }
 
+  loadPizzaRating = (rating) => {
+    let pizzaRatingArr = []
+    for (let i = 0; i < Math.floor(rating); i++) {
+      pizzaRatingArr.push(FULL_PIZZA)
+    }
+    if (rating % 1 !== 0) {
+      pizzaRatingArr.push(HALF_PIZZA)
+    }
+    return pizzaRatingArr
+  }
+
   render() {
+    const { restaurantName, url, phoneNumber, rating, price, pizzaRatingArr } = this.state
     return (
       this.state.loaded
         ? (
@@ -51,7 +69,17 @@ export class WinnerScreen extends Component {
                 }
               }
             />
-            <Text>This is the WinnerScreen</Text>
+            <View style={styles.title}>
+              <Text style={styles.restaurantName}>{restaurantName}</Text>
+              <View style={styles.pizzaRatingContainer}>
+                {pizzaRatingArr.map(url => {
+                  return (
+                    <Image key={generateUID()} source={url} style={styles.pizzaRating} />
+                  )
+                })}
+                <Text style={styles.pizzaRatingText}>({rating} Slices)</Text>
+              </View>
+            </View>
           </View>
         )
         : (
@@ -66,7 +94,22 @@ export class WinnerScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+  },
+  restaurantName: {
+    fontSize: 35,
+    fontWeight: '900'
+  },
+  pizzaRatingContainer: {
+    flexDirection: 'row'
+  },
+  pizzaRating: {
+    height: 25,
+    width: 25,
+    marginHorizontal: 1.5
+  },
+  pizzaRatingText: {
+    fontSize: 20,
+    fontStyle: 'italic'
   }
 })
 
