@@ -37,9 +37,17 @@ export class WinnerScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>This is the WinnerScreen</Text>
-      </View>
+      this.state.loaded
+        ? (
+          <View style={styles.container}>
+            <Text>This is the WinnerScreen</Text>
+          </View>
+        )
+        : (
+          <View style={styles.container}>
+            <Text>Still choosing your restaurant....</Text>
+          </View>
+        )
     )
   }
 }
