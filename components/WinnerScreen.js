@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity, Linking, Platform } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Linking, Platform, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Header } from 'react-native-elements'
@@ -144,8 +144,21 @@ export class WinnerScreen extends Component {
                   </View>
                 </View>
               </View>
+              <View style={styles.reviewContainer}>
+                <Text style={styles.reviewTitle}>Customer Reviews:</Text>
+                <ScrollView style={styles.scrollViewContainer}>
+                  {reviews.map(review => {
+                    return (
+                      <View key={generateUID()} style={{ marginBottom: 10 }}>
+                        <Text style={styles.reviewUserName}>{review.user.name}</Text>
+                        <Text style={styles.reviewText}>{review.text}</Text>
+                      </View>
+                    )
+                  })}
+                </ScrollView>
+              </View>
             </View>
-          </View>
+          </View >
         )
         : (
           <View style={styles.container}>
@@ -248,6 +261,31 @@ const styles = StyleSheet.create({
   },
   yelpIcon: {
     marginRight: 10
+  },
+  reviewContainer: {
+    marginTop: 10,
+    borderTopWidth: 5,
+    paddingTop: 15
+  },
+  reviewTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  scrollViewContainer: {
+    marginTop: 10,
+    borderWidth: 2,
+    padding: 10,
+    borderRadius: 10,
+    height: '45%'
+  },
+  reviewUserName: {
+    fontWeight: 'bold',
+    fontSize: 24
+  },
+  reviewText: {
+    fontStyle: 'italic',
+    fontSize: 20
   }
 })
 
