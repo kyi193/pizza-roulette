@@ -53,6 +53,11 @@ export class WinnerScreen extends Component {
     return pizzaRatingArr
   }
 
+  priceDescription = (price) => {
+    return price.length === 3 ? 'Oh you fancy' :
+      price.length === 2 ? 'A lil\' more upscale' : 'Cheap Eats'
+  }
+
   render() {
     const { restaurantName, url, phoneNumber, rating, price, pizzaRatingArr } = this.state
     return (
@@ -80,6 +85,10 @@ export class WinnerScreen extends Component {
                 <Text style={styles.pizzaRatingText}>({rating} Slices)</Text>
               </View>
             </View>
+            <View style={styles.pizzaRatingContainer}>
+              <Text style={styles.price}>{price}</Text>
+              <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
+            </View>
           </View>
         )
         : (
@@ -96,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   restaurantName: {
-    fontSize: 35,
+    fontSize: 30,
     fontWeight: '900'
   },
   pizzaRatingContainer: {
@@ -108,6 +117,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 1.5
   },
   pizzaRatingText: {
+    fontSize: 20,
+    fontStyle: 'italic'
+  },
+  price: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'green'
+  },
+  priceText: {
+    paddingTop: 8,
     fontSize: 20,
     fontStyle: 'italic'
   }
