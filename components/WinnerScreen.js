@@ -71,6 +71,10 @@ export class WinnerScreen extends Component {
     Linking.openURL(phoneNumberString);
   };
 
+  openURL = (url) => {
+    Linking.openURL(url).catch((err) => console.error('An error occurred', err));
+  }
+
   render() {
     const { restaurantName, url, phoneNumber, rating, price, pizzaRatingArr } = this.state
     return (
@@ -109,8 +113,13 @@ export class WinnerScreen extends Component {
                 <Text style={styles.locationText}>{this.state.location.postal_code}</Text>
               </View>
               <View style={styles.phoneNumberContainer}>
-                <TouchableOpacity onPress={() => this.dialCall(phoneNumber)} activeOpacity={0.7} style={styles.button} >
+                <TouchableOpacity onPress={() => this.dialCall(phoneNumber)} activeOpacity={0.7} style={styles.callButton} >
                   <Text style={styles.phoneNumberText}>Call us now</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.phoneNumberContainer}>
+                <TouchableOpacity onPress={() => this.openURL(url)} activeOpacity={0.7} style={styles.urlButton} >
+                  <Text style={styles.phoneNumberText}>Visit our Yelp page</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -159,14 +168,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  button: {
+  callButton: {
     width: '55%',
     padding: 6,
     backgroundColor: '#FF6F00',
     borderRadius: 7,
     marginRight: 15,
     height: 40,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 10
+  },
+  urlButton: {
+    width: '55%',
+    padding: 6,
+    backgroundColor: 'red',
+    borderRadius: 7,
+    marginRight: 15,
+    height: 40,
+    justifyContent: 'center',
   },
   phoneNumberText: {
     color: '#fff',
