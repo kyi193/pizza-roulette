@@ -19,6 +19,8 @@ export class WinnerScreen extends Component {
     rating: null,
     location: null,
     price: null,
+    photo: null,
+    reviews: null,
     loaded: false,
     pizzaRatingArr: null
   }
@@ -28,7 +30,7 @@ export class WinnerScreen extends Component {
     axios.get(`${API_URL}/${id}`)
       .then(res => {
         const business = res.data.business
-        const { url, phone, rating, location, price } = business
+        const { url, phone, rating, location, price, photos, reviews } = business
         const pizzaRatingArr = this.loadPizzaRating(rating)
         this.setState(() => ({
           url,
@@ -36,6 +38,8 @@ export class WinnerScreen extends Component {
           rating,
           location,
           price,
+          photo: photos[0],
+          reviews,
           loaded: true,
           pizzaRatingArr
         }))
@@ -77,7 +81,7 @@ export class WinnerScreen extends Component {
   }
 
   render() {
-    const { restaurantName, url, phoneNumber, rating, price, pizzaRatingArr } = this.state
+    const { restaurantName, url, phoneNumber, rating, price, pizzaRatingArr, photo, reviews } = this.state
     return (
       this.state.loaded
         ? (
@@ -99,20 +103,25 @@ export class WinnerScreen extends Component {
               }
             />
             <View style={styles.content}>
-              <View style={styles.title}>
-                <Text style={styles.restaurantName}>{restaurantName}</Text>
-                <View style={styles.pizzaRatingContainer}>
-                  {pizzaRatingArr.map(url => {
-                    return (
-                      <Image key={generateUID()} source={url} style={styles.pizzaRating} />
-                    )
-                  })}
-                  <Text style={styles.pizzaRatingText}>({rating} Slices)</Text>
+              <View style={styles.topSection}>
+                <View style={{ width: '55%' }}>
+                  <View style={styles.title}>
+                    <Text style={styles.restaurantName}>{restaurantName}</Text>
+                    <View style={styles.pizzaRatingContainer}>
+                      {pizzaRatingArr.map(url => {
+                        return (
+                          <Image key={generateUID()} source={url} style={styles.pizzaRating} />
+                        )
+                      })}
+                      <Text style={styles.pizzaRatingText}></Text>
+                    </View>
+                  </View>
+                  <View style={styles.pizzaRatingContainer}>
+                    <Text style={styles.price}>{price}</Text>
+                    <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
+                  </View>
                 </View>
-              </View>
-              <View style={styles.pizzaRatingContainer}>
-                <Text style={styles.price}>{price}</Text>
-                <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
+                <Image key={generateUID()} source={{ uri: photo }} style={styles.restaurantPhoto} />
               </View>
               <View style={styles.locationButtonSection}>
                 <View style={styles.locationContainer}>
@@ -151,6 +160,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  topSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   restaurantName: {
     fontSize: 30,
     fontWeight: '900',
@@ -176,6 +189,12 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     fontSize: 20,
     fontStyle: 'italic'
+  },
+  restaurantPhoto: {
+    height: 125,
+    width: 125,
+    borderRadius: 100,
+    borderWidth: 3
   },
   phoneNumberContainer: {
     justifyContent: 'center',
