@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import axios from 'axios';
+import { Header } from 'react-native-elements'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
 
@@ -40,6 +41,16 @@ export class WinnerScreen extends Component {
       this.state.loaded
         ? (
           <View style={styles.container}>
+            <Header
+              containerStyle={
+                {
+                  backgroundColor: '#FF4900',
+                  justifyContent: 'space-around',
+                  borderBottomColor: 'white',
+                  borderBottomWidth: '3',
+                }
+              }
+            />
             <Text>This is the WinnerScreen</Text>
           </View>
         )
@@ -55,7 +66,6 @@ export class WinnerScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center'
   }
 })
