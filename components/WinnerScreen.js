@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, Linking, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Header } from 'react-native-elements'
@@ -58,6 +58,19 @@ export class WinnerScreen extends Component {
       price.length === 2 ? 'A lil\' more upscale' : 'Cheap Eats'
   }
 
+  dialCall = (phoneNumber) => {
+    let phoneNumberString = '';
+
+    if (Platform.OS === 'android') {
+      phoneNumberString = 'tel:${' + `${phoneNumber}` + '}';
+    }
+    else {
+      phoneNumberString = 'telprompt:${' + `${phoneNumber}` + '}';
+    }
+
+    Linking.openURL(phoneNumberString);
+  };
+
   render() {
     const { restaurantName, url, phoneNumber, rating, price, pizzaRatingArr } = this.state
     return (
@@ -88,6 +101,11 @@ export class WinnerScreen extends Component {
             <View style={styles.pizzaRatingContainer}>
               <Text style={styles.price}>{price}</Text>
               <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
+            </View>
+            <View style={styles.phoneNumberContainer}>
+              <TouchableOpacity onPress={() => this.dialCall(phoneNumber)} activeOpacity={0.7} style={styles.button} >
+                <Text style={styles.phoneNumberText}>Call us now</Text>
+              </TouchableOpacity>
             </View>
           </View>
         )
@@ -129,6 +147,24 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     fontSize: 20,
     fontStyle: 'italic'
+  },
+  phoneNumberContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  button: {
+    width: '55%',
+    padding: 6,
+    backgroundColor: '#FF6F00',
+    borderRadius: 7,
+    marginRight: 15,
+    height: 40,
+    justifyContent: 'center'
+  },
+  phoneNumberText: {
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
   }
 })
 
