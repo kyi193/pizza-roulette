@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
 import WheelOfFortune from 'react-native-wheel-of-fortune'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { submitRestaurant } from '../actions'
+import { Header } from 'react-native-elements'
+import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+import pizzaKnob from '../assets/images/pizzaKnob.png'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/getRestaurants'
+const backgroundImage = { uri: "https://i.imgur.com/Fr2tPr1.png" }
 
 export class GestureSpinnerWheel extends Component {
   state = {
@@ -55,39 +59,68 @@ export class GestureSpinnerWheel extends Component {
     dispatch(submitRestaurant(restaurantName, restaurantID))
   }
 
+  goHome = () => {
+    this.props.navigation.navigate("User Input Screen")
+  }
+
   render() {
     const restaurants = this.state.businessList.map(business => business[0])
     return (
       this.state.loaded
         ? (
-          <View style={styles.container}>
-            <WheelOfFortune
-              onRef={ref => (this.child = ref)}
-              rewards={restaurants}
-              knobSize={20}
-              borderWidth={3}
-              borderColor={"#FFF"}
-              winner={Math.floor(Math.random() * restaurants.length)}
-              innerRadius={10}
-              textColor={"#FFFFFF"}
-              backgroundColor={"#c0392b"}
-              getWinner={(value, index) => {
-                const restaurantName = this.state.businessList[index][1]
-                const restaurantID = this.state.businessList[index][2]
-                this.submitRestaurant(restaurantName, restaurantID)
-                this.setState({
-                  selectedRestaurant: value,
-                  selectedIndex: index
-                })
-                this.props.navigation.navigate('Winner Screen')
-              }}
+          <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+            <Header
+              leftComponent={
+                <TouchableOpacity onPress={() => this.goHome()}>
+                  <MaterialIcons name="home" size={30} color="white" />
+                </TouchableOpacity>
+              }
+              centerComponent={
+                <View>
+                  <Text style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }}>Spin the Wheel!</Text>
+                </View>
+              }
+              rightComponent={<FontAwesome5 name="pizza-slice" size={24} color="#FFDF00" />}
+              containerStyle={
+                {
+                  backgroundColor: '#FF4900',
+                  justifyContent: 'space-around',
+                  borderBottomColor: 'white',
+                }
+              }
             />
-            {this.state.selectedRestaurant
-              && <View style={{ paddingBottom: 100 }}>
-                <Text>{this.state.businessList[this.state.selectedIndex][1]}</Text>
-              </View>
-            }
-          </View>
+            <View style={styles.container}>
+              <WheelOfFortune
+                onRef={ref => (this.child = ref)}
+                rewards={restaurants}
+                knobSize={28}
+                borderWidth={.1}
+                borderColor={"#FFF"}
+                winner={Math.floor(Math.random() * restaurants.length)}
+                innerRadius={10}
+                textColor={"#FF0000"}
+                backgroundColor={"#da9e52"}
+                colors={['#ffdf00']}
+                duration={5000}
+                knoobSource={pizzaKnob}
+                getWinner={(value, index) => {
+                  const restaurantName = this.state.businessList[index][1]
+                  const restaurantID = this.state.businessList[index][2]
+                  this.submitRestaurant(restaurantName, restaurantID)
+                  this.setState({
+                    selectedRestaurant: value,
+                    selectedIndex: index
+                  })
+                  this.props.navigation.navigate('Winner Screen')
+                }}
+              />
+              {this.state.selectedRestaurant
+                && <View style={{ paddingBottom: 100 }}>
+                  <Text>{this.state.businessList[this.state.selectedIndex][1]}</Text>
+                </View>
+              }
+            </View>
+          </ImageBackground>
         )
         : (
           <View style={styles.loading}>
@@ -109,11 +142,16 @@ export default connect(mapStateToProps)(GestureSpinnerWheel)
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingBottom: 80,
   },
   loading: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  backgroundImage: {
+    width: '100%',
+    height: '100%'
+  },
 })
