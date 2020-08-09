@@ -67,12 +67,12 @@ export class GestureSpinnerWheel extends Component {
                 onRef={ref => (this.child = ref)}
                 rewards={restaurants}
                 knobSize={20}
-                borderWidth={3}
+                borderWidth={.1}
                 borderColor={"#FFF"}
                 winner={Math.floor(Math.random() * restaurants.length)}
                 innerRadius={10}
                 textColor={"#FFFFFF"}
-                backgroundColor={"#c0392b"}
+                backgroundColor={"#da9e52"}
                 getWinner={(value, index) => {
                   const restaurantName = this.state.businessList[index][1]
                   const restaurantID = this.state.businessList[index][2]
