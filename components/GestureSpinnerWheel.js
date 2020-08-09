@@ -97,8 +97,10 @@ export class GestureSpinnerWheel extends Component {
                 borderColor={"#FFF"}
                 winner={Math.floor(Math.random() * restaurants.length)}
                 innerRadius={10}
-                textColor={"#FFFFFF"}
+                textColor={"#FF0000"}
                 backgroundColor={"#da9e52"}
+                colors={['#ffdf00']}
+                duration={5000}
                 getWinner={(value, index) => {
                   const restaurantName = this.state.businessList[index][1]
                   const restaurantID = this.state.businessList[index][2]
