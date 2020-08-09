@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Header } from 'react-native-elements'
 import { generateUID } from '../utils/helpers'
 import { Entypo, MaterialCommunityIcons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import pizzaLoader from '../assets/images/pizzaLoader.gif'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
 const FULL_PIZZA = { uri: 'https://i.imgur.com/2Zxn2Cq.png' }
@@ -170,8 +171,10 @@ export class WinnerScreen extends Component {
           </View >
         )
         : (
-          <View style={styles.container}>
-            <Text>Still choosing your restaurant....</Text>
+          <View style={styles.loading}>
+            <Text style={styles.loadingTextLarge}>Loading</Text>
+            <Text style={styles.loadingTextMedium}>Restaurant Info</Text>
+            <Image source={pizzaLoader} style={styles.pizzaLoader} />
           </View>
         )
     )
@@ -295,7 +298,26 @@ const styles = StyleSheet.create({
   reviewText: {
     fontStyle: 'italic',
     fontSize: 20
-  }
+  },
+  pizzaLoader: {
+    height: 150,
+    width: 150
+  },
+  loadingTextLarge: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    fontFamily: 'Noteworthy-Bold',
+  },
+  loadingTextMedium: {
+    fontSize: 25,
+    fontStyle: 'italic'
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
 })
 
 function mapStateToProps(state) {
