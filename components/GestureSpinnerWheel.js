@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image } from 'react-native'
 import WheelOfFortune from 'react-native-wheel-of-fortune'
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import { submitRestaurant } from '../actions'
 import { Header } from 'react-native-elements'
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import pizzaKnob from '../assets/images/pizzaKnob.png'
+import pizzaLoader from '../assets/images/pizzaLoader.gif'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/getRestaurants'
 const backgroundImage = { uri: "https://i.imgur.com/Fr2tPr1.png" }
@@ -124,8 +125,9 @@ export class GestureSpinnerWheel extends Component {
         )
         : (
           <View style={styles.loading}>
-            <Text>Loading</Text>
-            <Text>Mmm... Pizza.......</Text>
+            <Text style={styles.loadingTextLarge}>Loading</Text>
+            <Text style={styles.loadingTextMedium}>Mmm... Pizza.......</Text>
+            <Image source={pizzaLoader} style={styles.pizzaLoader} />
           </View>
         )
     )
@@ -148,10 +150,25 @@ const styles = StyleSheet.create({
   loading: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   backgroundImage: {
     width: '100%',
     height: '100%'
+
   },
+  pizzaLoader: {
+    height: 150,
+    width: 150
+  },
+  loadingTextLarge: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    fontFamily: 'Noteworthy-Bold',
+  },
+  loadingTextMedium: {
+    fontSize: 25,
+    fontStyle: 'italic'
+  }
 })
