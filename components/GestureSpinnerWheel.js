@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground } from 'react-native'
 import WheelOfFortune from 'react-native-wheel-of-fortune'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { submitRestaurant } from '../actions'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/getRestaurants'
+const backgroundImage = { uri: "https://i.imgur.com/Fr2tPr1.png" }
 
 export class GestureSpinnerWheel extends Component {
   state = {
@@ -60,34 +61,36 @@ export class GestureSpinnerWheel extends Component {
     return (
       this.state.loaded
         ? (
-          <View style={styles.container}>
-            <WheelOfFortune
-              onRef={ref => (this.child = ref)}
-              rewards={restaurants}
-              knobSize={20}
-              borderWidth={3}
-              borderColor={"#FFF"}
-              winner={Math.floor(Math.random() * restaurants.length)}
-              innerRadius={10}
-              textColor={"#FFFFFF"}
-              backgroundColor={"#c0392b"}
-              getWinner={(value, index) => {
-                const restaurantName = this.state.businessList[index][1]
-                const restaurantID = this.state.businessList[index][2]
-                this.submitRestaurant(restaurantName, restaurantID)
-                this.setState({
-                  selectedRestaurant: value,
-                  selectedIndex: index
-                })
-                this.props.navigation.navigate('Winner Screen')
-              }}
-            />
-            {this.state.selectedRestaurant
-              && <View style={{ paddingBottom: 100 }}>
-                <Text>{this.state.businessList[this.state.selectedIndex][1]}</Text>
-              </View>
-            }
-          </View>
+          <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+            <View style={styles.container}>
+              <WheelOfFortune
+                onRef={ref => (this.child = ref)}
+                rewards={restaurants}
+                knobSize={20}
+                borderWidth={3}
+                borderColor={"#FFF"}
+                winner={Math.floor(Math.random() * restaurants.length)}
+                innerRadius={10}
+                textColor={"#FFFFFF"}
+                backgroundColor={"#c0392b"}
+                getWinner={(value, index) => {
+                  const restaurantName = this.state.businessList[index][1]
+                  const restaurantID = this.state.businessList[index][2]
+                  this.submitRestaurant(restaurantName, restaurantID)
+                  this.setState({
+                    selectedRestaurant: value,
+                    selectedIndex: index
+                  })
+                  this.props.navigation.navigate('Winner Screen')
+                }}
+              />
+              {this.state.selectedRestaurant
+                && <View style={{ paddingBottom: 100 }}>
+                  <Text>{this.state.businessList[this.state.selectedIndex][1]}</Text>
+                </View>
+              }
+            </View>
+          </ImageBackground>
         )
         : (
           <View style={styles.loading}>
@@ -115,5 +118,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  backgroundImage: {
+    width: '100%',
+    height: '100%'
+  },
 })
