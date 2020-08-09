@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { submitRestaurant } from '../actions'
 import { Header } from 'react-native-elements'
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+import pizzaKnob from '../assets/images/pizzaKnob.png'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/getRestaurants'
 const backgroundImage = { uri: "https://i.imgur.com/Fr2tPr1.png" }
@@ -92,7 +93,7 @@ export class GestureSpinnerWheel extends Component {
               <WheelOfFortune
                 onRef={ref => (this.child = ref)}
                 rewards={restaurants}
-                knobSize={20}
+                knobSize={28}
                 borderWidth={.1}
                 borderColor={"#FFF"}
                 winner={Math.floor(Math.random() * restaurants.length)}
@@ -101,6 +102,7 @@ export class GestureSpinnerWheel extends Component {
                 backgroundColor={"#da9e52"}
                 colors={['#ffdf00']}
                 duration={5000}
+                knoobSource={pizzaKnob}
                 getWinner={(value, index) => {
                   const restaurantName = this.state.businessList[index][1]
                   const restaurantID = this.state.businessList[index][2]
