@@ -10,6 +10,7 @@ import pizzaLoader from '../assets/images/pizzaLoader.gif'
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
 const FULL_PIZZA = { uri: 'https://i.imgur.com/2Zxn2Cq.png' }
 const HALF_PIZZA = { uri: 'https://i.imgur.com/tljEnPj.png' }
+const NO_PHOTO_URL = 'https://www.marshall.edu/it/files/question-mark-circle-icon.png'
 
 export class WinnerScreen extends Component {
   state = {
@@ -135,7 +136,7 @@ export class WinnerScreen extends Component {
                       <Text style={styles.nullPrice}>Price rating unknown</Text>
                     </View>}
                 </View>
-                <Image key={generateUID()} source={{ uri: photo }} style={styles.restaurantPhoto} />
+                <Image key={generateUID()} source={{ uri: !photo.includes('None/o.jpg') ? photo : NO_PHOTO_URL }} style={styles.restaurantPhoto} />
               </View>
               <View style={styles.locationButtonSection}>
                 <View style={styles.locationContainer}>
