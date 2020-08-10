@@ -126,10 +126,14 @@ export class WinnerScreen extends Component {
                       <Text style={styles.pizzaRatingText}></Text>
                     </View>
                   </View>
-                  <View style={styles.pizzaRatingContainer}>
-                    <Text style={styles.price}>{price}</Text>
-                    <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
-                  </View>
+                  {price
+                    ? <View style={styles.pizzaRatingContainer}>
+                      <Text style={styles.price}>{price}</Text>
+                      <Text style={styles.priceText}> - {this.priceDescription(price)}</Text>
+                    </View>
+                    : <View>
+                      <Text style={styles.nullPrice}>Price rating unknown</Text>
+                    </View>}
                 </View>
                 <Image key={generateUID()} source={{ uri: photo }} style={styles.restaurantPhoto} />
               </View>
@@ -318,6 +322,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white'
   },
+  nullPrice: {
+    marginTop: 10,
+    fontSize: 18,
+    fontStyle: 'italic'
+  }
 })
 
 function mapStateToProps(state) {
