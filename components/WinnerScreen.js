@@ -161,16 +161,20 @@ export class WinnerScreen extends Component {
               </View>
               <View style={styles.reviewContainer}>
                 <Text style={styles.reviewTitle}>Customer Reviews:</Text>
-                <ScrollView style={styles.scrollViewContainer}>
-                  {reviews.map(review => {
-                    return (
-                      <View key={generateUID()} style={{ marginBottom: 10 }}>
-                        <Text style={styles.reviewUserName}>{review.user.name}</Text>
-                        <Text style={styles.reviewText}>{review.text}</Text>
-                      </View>
-                    )
-                  })}
-                </ScrollView>
+                {reviews.length > 0
+                  ? <ScrollView style={styles.scrollViewContainer}>
+                    {reviews.map(review => {
+                      return (
+                        <View key={generateUID()} style={{ marginBottom: 10 }}>
+                          <Text style={styles.reviewUserName}>{review.user.name}</Text>
+                          <Text style={styles.reviewText}>{review.text}</Text>
+                        </View>
+                      )
+                    })}
+                  </ScrollView>
+                  : <View style={styles.nullReviewContainer}>
+                    <Text style={styles.nullReviewText}>Looks like there aren't any reviews...</Text>
+                  </View>}
               </View>
             </View>
           </View >
@@ -326,6 +330,16 @@ const styles = StyleSheet.create({
   nullPrice: {
     marginTop: 10,
     fontSize: 18,
+    fontStyle: 'italic'
+  },
+  nullReviewContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 5
+  },
+  nullReviewText: {
+    fontSize: 24,
+    textAlign: 'center',
     fontStyle: 'italic'
   }
 })
