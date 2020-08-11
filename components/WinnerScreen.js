@@ -95,15 +95,21 @@ export class WinnerScreen extends Component {
             <Header
               leftComponent={
                 <TouchableOpacity onPress={() => this.goHome()}>
-                  <MaterialIcons name="home" size={30} color="white" />
+                  <Image
+                    style={{ height: 50, width: 50 }}
+                    source={require('../assets/images/homeButton.png')}
+                  />
                 </TouchableOpacity>
               }
               centerComponent={
                 <View>
-                  <Text style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }}>Pizza Roulette</Text>
+                  <Text style={{ fontSize: 24, color: 'white', fontWeight: 'bold' }}>Spin the Wheel!</Text>
                 </View>
               }
-              rightComponent={<FontAwesome5 name="pizza-slice" size={24} color="#FFDF00" />}
+              rightComponent={<Image
+                style={{ height: 50, width: 50 }}
+                source={require('../assets/images/pizzaIcon.png')}
+              />}
               containerStyle={
                 {
                   backgroundColor: '#FF4900',
