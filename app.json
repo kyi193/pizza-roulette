@@ -1,10 +1,25 @@
 {
-  "name": "PizzaRoulette",
-  "displayName": "PizzaRoulette",
   "expo": {
-    "name": "PizzaRoulette",
-    "slug": "expo-template-bare",
+    "name": "Pizza Roulette",
+    "slug": "PizzaRoulette",
+    "sdkVersion": "38.0.0",
+    "description": "Can't pick a place to eat? Let Pizza Roulette's decision wheel choose for you!",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splashscreen.png",
+      "resizeMode": "cover"
+    },
+    "ios": {
+      "bundleIdentifier": "com.pizzaroulette.exp",
+      "buildNumber": "1.0.0"
+    },
+    "orientation": "portrait",
     "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "assetBundlePatterns": [
       "**/*"
     ]
