@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Pizza Roulette",
-    "slug": "PizzaRoulette",
+    "name": "Kev's Pizza Roulette",
+    "slug": "KevsPizzaRoulette",
     "sdkVersion": "38.0.0",
     "description": "Can't pick a place to eat? Let Pizza Roulette's decision wheel choose for you!",
     "icon": "./assets/images/icon.png",
@@ -10,7 +10,7 @@
       "resizeMode": "cover"
     },
     "ios": {
-      "bundleIdentifier": "com.pizzaroulette.exp",
+      "bundleIdentifier": "com.kevspizzaroulette.exp",
       "buildNumber": "1.0.0"
     },
     "orientation": "portrait",
