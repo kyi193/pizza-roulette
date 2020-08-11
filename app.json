@@ -11,10 +11,10 @@
     },
     "ios": {
       "bundleIdentifier": "com.kevspizzaroulette.exp",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.1"
     },
     "orientation": "portrait",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "platforms": [
       "ios",
       "android",
