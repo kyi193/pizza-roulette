@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import UserInputScreen from './components/UserInputScreen'
 import GestureSpinnerWheel from './components/GestureSpinnerWheel'
@@ -11,6 +11,8 @@ import reducer from './reducers'
 import middleware from './middleware'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
+import { AppLoading } from 'expo';
+import { Asset } from 'expo-asset'
 
 const Stack = createStackNavigator();
 const MainNav = () => (
@@ -32,15 +34,39 @@ const MainNav = () => (
   </Stack.Navigator>
 );
 
-export default function App() {
-  return (
-    <Provider store={createStore(reducer, composeWithDevTools(middleware))}>
-      <NavigationContainer>
-        <MainNav />
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </Provider>
-  );
+export default class App extends React.Component {
+  state = {
+    isReady: false,
+  }
+  render() {
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._cacheResourcesAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      );
+    }
+
+    return (
+      <Provider store={createStore(reducer, composeWithDevTools(middleware))}>
+        <NavigationContainer>
+          <MainNav />
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </Provider>
+    );
+  }
+
+  async _cacheResourcesAsync() {
+    const images = [require('./assets/images/splashscreen.png')];
+
+    const cacheImages = images.map(image => {
+      return Asset.fromModule(image).downloadAsync();
+    });
+    return Promise.all(cacheImages);
+  }
 }
 
 const styles = StyleSheet.create({
