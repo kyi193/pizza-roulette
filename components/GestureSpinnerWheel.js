@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Alert } from 'react-native'
 import WheelOfFortune from 'react-native-wheel-of-fortune'
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -26,6 +26,7 @@ export class GestureSpinnerWheel extends Component {
     axios.get(`${API_URL}/${zipCode}`)
       .then(res => {
         const businessList = res.data.search.business
+        this.checkIfBusinessListIsEmpty(businessList)
         const randomBusinessList = this.selectRandomBusinesses(businessList)
         this.setState(() => ({
           businessList: randomBusinessList,
@@ -33,6 +34,21 @@ export class GestureSpinnerWheel extends Component {
         }))
       })
       .catch(error => console.log(error))
+  }
+
+  checkIfBusinessListIsEmpty = (businessList) => {
+    if (businessList.length === 0) {
+      Alert.alert(
+        "Please enter another zipcode",
+        "There were no restaurants found",
+        [
+          { text: "OK" }
+        ],
+        { cancelable: false }
+      );
+      this.props.navigation.navigate('User Input Screen')
+    }
+    return
   }
 
   selectRandomBusinesses = (businessList) => {
