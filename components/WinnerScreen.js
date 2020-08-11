@@ -6,11 +6,11 @@ import { Header } from 'react-native-elements'
 import { generateUID } from '../utils/helpers'
 import { Entypo, MaterialCommunityIcons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import pizzaLoader from '../assets/images/pizzaLoader.gif'
+import fullPizza from '../assets/images/fullPizza.png'
+import halfPizza from '../assets/images/halfPizza.png'
+import noPhoto from '../assets/images/noPhoto.png'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
-const FULL_PIZZA = { uri: 'https://i.imgur.com/2Zxn2Cq.png' }
-const HALF_PIZZA = { uri: 'https://i.imgur.com/tljEnPj.png' }
-const NO_PHOTO_URL = 'https://www.marshall.edu/it/files/question-mark-circle-icon.png'
 
 export class WinnerScreen extends Component {
   state = {
@@ -52,10 +52,10 @@ export class WinnerScreen extends Component {
   loadPizzaRating = (rating) => {
     let pizzaRatingArr = []
     for (let i = 0; i < Math.floor(rating); i++) {
-      pizzaRatingArr.push(FULL_PIZZA)
+      pizzaRatingArr.push(fullPizza)
     }
     if (rating % 1 !== 0) {
-      pizzaRatingArr.push(HALF_PIZZA)
+      pizzaRatingArr.push(halfPizza)
     }
     return pizzaRatingArr
   }
@@ -136,7 +136,7 @@ export class WinnerScreen extends Component {
                       <Text style={styles.nullPrice}>Price rating unknown</Text>
                     </View>}
                 </View>
-                <Image key={generateUID()} source={{ uri: !photo.includes('None/o.jpg') ? photo : NO_PHOTO_URL }} style={styles.restaurantPhoto} />
+                <Image key={generateUID()} source={!photo.includes('None/o.jpg') ? { uri: photo } : noPhoto} style={styles.restaurantPhoto} />
               </View>
               <View style={styles.locationButtonSection}>
                 <View style={styles.locationContainer}>
