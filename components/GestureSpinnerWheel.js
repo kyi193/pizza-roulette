@@ -18,7 +18,8 @@ export class GestureSpinnerWheel extends Component {
     selectIndex: null,
     zipCode: this.props.zipCode,
     businessList: [],
-    loaded: false
+    loaded: false,
+    show: false
   }
 
   componentDidMount = () => {
@@ -34,6 +35,20 @@ export class GestureSpinnerWheel extends Component {
         }))
       })
       .catch(error => console.log(error))
+
+    this.timeoutId = setTimeout(function () {
+      this.setState({ show: true });
+    }.bind(this), 5000);
+  }
+
+  componentWillUnmount() {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  }
+
+  enableMessage() {
+    this.setState({ show: true });
   }
 
   checkIfBusinessListIsEmpty = (businessList) => {
@@ -150,6 +165,11 @@ export class GestureSpinnerWheel extends Component {
             <Text style={styles.loadingTextLarge}>Loading</Text>
             <Text style={styles.loadingTextMedium}>Mmm... Pizza.......</Text>
             <Image source={pizzaLoader} style={styles.pizzaLoader} />
+            {this.state.show && <View>
+              <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', fontStyle: 'italic' }}>Taking too long?</Text>
+              </View>
+            </View>}
           </View>
         )
     )
