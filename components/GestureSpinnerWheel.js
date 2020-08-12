@@ -12,6 +12,17 @@ import pizzaLoader from '../assets/images/pizzaLoader.gif'
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/getRestaurants'
 const backgroundImage = { uri: "https://i.imgur.com/Fr2tPr1.png" }
 
+const BackButton = ({ onPress }) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.backButton}
+    >
+      <Text style={styles.backText}>Go Back</Text>
+    </TouchableOpacity>
+  )
+}
+
 export class GestureSpinnerWheel extends Component {
   state = {
     selectedRestaurant: null,
@@ -168,6 +179,7 @@ export class GestureSpinnerWheel extends Component {
             {this.state.show && <View>
               <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', fontStyle: 'italic' }}>Taking too long?</Text>
+                <BackButton onPress={this.goHome} />
               </View>
             </View>}
           </View>
@@ -212,5 +224,18 @@ const styles = StyleSheet.create({
   loadingTextMedium: {
     fontSize: 25,
     fontStyle: 'italic'
+  },
+  backButton: {
+    width: 100,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    backgroundColor: 'red',
+    marginTop: 10
+  },
+  backText: {
+    textAlign: 'center',
+    color: 'yellow',
+    fontWeight: 'bold'
   }
 })
