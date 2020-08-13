@@ -4,11 +4,12 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { Header } from 'react-native-elements'
 import { generateUID } from '../utils/helpers'
-import { Entypo, MaterialCommunityIcons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import pizzaLoader from '../assets/images/pizzaLoader.gif'
 import fullPizza from '../assets/images/fullPizza.png'
 import halfPizza from '../assets/images/halfPizza.png'
 import noPhoto from '../assets/images/noPhoto.png'
+import yelpIcon from '../assets/images/yelp.png'
+import cellPhoneIcon from '../assets/images/cellPhoneIcon.png'
 
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/detailedPage'
 
@@ -152,13 +153,13 @@ export class WinnerScreen extends Component {
                 </View>
                 <View>
                   <View style={styles.phoneNumberContainer}>
-                    <MaterialCommunityIcons name="cellphone" size={35} color="black" style={styles.phoneIcon} />
+                    <Image source={cellPhoneIcon} style={styles.phoneIcon} />
                     <TouchableOpacity onPress={() => this.dialCall(phoneNumber)} activeOpacity={0.7} style={styles.callButton} >
                       <Text style={styles.phoneNumberText}>Call us now</Text>
                     </TouchableOpacity>
                   </View>
                   <View style={styles.phoneNumberContainer}>
-                    <Entypo name="yelp" size={35} color="red" style={styles.yelpIcon} />
+                    <Image source={yelpIcon} style={styles.yelpIcon} />
                     <TouchableOpacity onPress={() => this.openURL(url)} activeOpacity={0.7} style={styles.urlButton} >
                       <Text style={styles.phoneNumberText}>Yelp page</Text>
                     </TouchableOpacity>
@@ -283,10 +284,14 @@ const styles = StyleSheet.create({
     paddingTop: 12
   },
   phoneIcon: {
+    height: 35,
+    width: 35,
     marginBottom: 10,
     marginRight: 10
   },
   yelpIcon: {
+    height: 35,
+    width: 35,
     marginRight: 10
   },
   reviewContainer: {
