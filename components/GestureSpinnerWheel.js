@@ -36,21 +36,9 @@ export class GestureSpinnerWheel extends Component {
   componentDidMount = () => {
     const zipCode = this.props.zipCode
     this.fetchBusinessData(zipCode)
-      .catch(error => {
-        if (error.response) {
-          this.fetchBusinessData(zipCode)
-        } else {
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      });
-
-    this.timeoutId = setTimeout(function () {
-      this.setState({ show: true });
-    }.bind(this), 5000);
   }
 
-  fetchBusinessData = (zipCode) => {
+  fetchBusinessData = (zipCode, attempts = 1) => {
     return axios.get(`${API_URL}/${zipCode}`)
       .then(res => {
         const businessList = res.data.search.business
@@ -61,13 +49,11 @@ export class GestureSpinnerWheel extends Component {
           loaded: true
         }))
       })
+      .catch(error => {
+        setTimeout(() => this.fetchBusinessData(zipCode, attempts + 1), 1000)
+      });
   }
 
-  componentWillUnmount() {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
-  }
 
   enableMessage() {
     this.setState({ show: true });

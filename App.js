@@ -41,23 +41,11 @@ const MainNav = () => (
 export default class App extends React.Component {
   state = {
     isReady: false,
-    serverPinged: false
   }
 
   componentDidMount = () => {
     axios.get(API_URL)
-      .then(res => console.log(res))
-      .catch(error => console.log(error))
-
-    this.timeoutId = setTimeout(function () {
-      this.setState({ serverPinged: true });
-    }.bind(this), 12000);
-  }
-
-  componentWillUnmount() {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
+      .catch(error => console.log('ERROR1', error))
   }
 
   render() {
@@ -72,22 +60,13 @@ export default class App extends React.Component {
     }
 
     return (
-      this.state.serverPinged ?
-        (<Provider store={createStore(reducer, composeWithDevTools(middleware))}>
-          <NavigationContainer>
-            <MainNav />
-            <StatusBar style="auto" />
-          </NavigationContainer>
-        </Provider>)
-        : (
-          <View style={styles.loading}>
-            <Text style={styles.loadingTextLarge}>Loading Data</Text>
-            <Text style={styles.loadingTextMedium}>Good pizza takes time</Text>
-            <Image source={pizzaLoader} style={styles.pizzaLoader} />
-            <Text style={styles.loadingTextMedium}>Mmm... Pizza.......</Text>
-          </View>
-        )
-    );
+      <Provider store={createStore(reducer, composeWithDevTools(middleware))}>
+        <NavigationContainer>
+          <MainNav />
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </Provider>
+    )
   }
 
   async _cacheResourcesAsync() {
