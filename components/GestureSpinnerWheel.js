@@ -30,7 +30,7 @@ export class GestureSpinnerWheel extends Component {
     zipCode: this.props.zipCode,
     businessList: [],
     loaded: false,
-    show: false
+    showBackButton: false
   }
 
   componentDidMount = () => {
@@ -39,7 +39,7 @@ export class GestureSpinnerWheel extends Component {
   }
 
   fetchBusinessData = (zipCode, attempts = 1) => {
-    return axios.get(`${API_URL}/${zipCode}`)
+    axios.get(`${API_URL}/${zipCode}`)
       .then(res => {
         const businessList = res.data.search.business
         this.checkIfBusinessListIsEmpty(businessList)
@@ -50,13 +50,18 @@ export class GestureSpinnerWheel extends Component {
         }))
       })
       .catch(error => {
-        setTimeout(() => this.fetchBusinessData(zipCode, attempts + 1), 1000)
+        if (attempts === 10) {
+          this.setState(() => ({
+            showBackButton: true
+          }))
+        } else {
+          setTimeout(() => this.fetchBusinessData(zipCode, attempts + 1), 2000)
+        }
       });
   }
 
-
   enableMessage() {
-    this.setState({ show: true });
+    this.setState({ showBackButton: true });
   }
 
   checkIfBusinessListIsEmpty = (businessList) => {
@@ -173,7 +178,7 @@ export class GestureSpinnerWheel extends Component {
             <Text style={styles.loadingTextLarge}>Loading</Text>
             <Text style={styles.loadingTextMedium}>Mmm... Pizza.......</Text>
             <Image source={pizzaLoader} style={styles.pizzaLoader} />
-            {this.state.show && <View>
+            {this.state.showBackButton && <View>
               <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', fontStyle: 'italic' }}>Taking too long?</Text>
                 <BackButton onPress={this.goHome} />
