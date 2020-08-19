@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import UserInputScreen from './components/UserInputScreen'
 import GestureSpinnerWheel from './components/GestureSpinnerWheel'
 import WinnerScreen from './components/WinnerScreen'
@@ -13,6 +13,10 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset'
+import axios from 'axios'
+import pizzaLoader from './assets/images/pizzaLoader.gif'
+
+const API_URL = 'https://whispering-badlands-07525.herokuapp.com/'
 
 const Stack = createStackNavigator();
 const MainNav = () => (
@@ -38,6 +42,12 @@ export default class App extends React.Component {
   state = {
     isReady: false,
   }
+
+  componentDidMount = () => {
+    axios.get(API_URL)
+      .catch(error => console.log('ERROR1', error))
+  }
+
   render() {
     if (!this.state.isReady) {
       return (
@@ -56,7 +66,7 @@ export default class App extends React.Component {
           <StatusBar style="auto" />
         </NavigationContainer>
       </Provider>
-    );
+    )
   }
 
   async _cacheResourcesAsync() {
@@ -76,4 +86,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  pizzaLoader: {
+    height: 150,
+    width: 150
+  },
+  loadingTextLarge: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    fontFamily: 'Noteworthy-Bold',
+    textAlign: 'center'
+  },
+  loadingTextMedium: {
+    fontSize: 25,
+    fontStyle: 'italic'
+  }
 });

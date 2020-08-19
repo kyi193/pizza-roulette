@@ -12,17 +12,33 @@ import pizzaLoader from '../assets/images/pizzaLoader.gif'
 const API_URL = 'https://whispering-badlands-07525.herokuapp.com/api/getRestaurants'
 const backgroundImage = { uri: "https://i.imgur.com/Fr2tPr1.png" }
 
+const BackButton = ({ onPress }) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.backButton}
+    >
+      <Text style={styles.backText}>Go Back</Text>
+    </TouchableOpacity>
+  )
+}
+
 export class GestureSpinnerWheel extends Component {
   state = {
     selectedRestaurant: null,
     selectIndex: null,
     zipCode: this.props.zipCode,
     businessList: [],
-    loaded: false
+    loaded: false,
+    showBackButton: false
   }
 
   componentDidMount = () => {
     const zipCode = this.props.zipCode
+    this.fetchBusinessData(zipCode)
+  }
+
+  fetchBusinessData = (zipCode, attempts = 1) => {
     axios.get(`${API_URL}/${zipCode}`)
       .then(res => {
         const businessList = res.data.search.business
@@ -33,7 +49,19 @@ export class GestureSpinnerWheel extends Component {
           loaded: true
         }))
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        if (attempts === 10) {
+          this.setState(() => ({
+            showBackButton: true
+          }))
+        } else {
+          setTimeout(() => this.fetchBusinessData(zipCode, attempts + 1), 2000)
+        }
+      });
+  }
+
+  enableMessage() {
+    this.setState({ showBackButton: true });
   }
 
   checkIfBusinessListIsEmpty = (businessList) => {
@@ -150,6 +178,12 @@ export class GestureSpinnerWheel extends Component {
             <Text style={styles.loadingTextLarge}>Loading</Text>
             <Text style={styles.loadingTextMedium}>Mmm... Pizza.......</Text>
             <Image source={pizzaLoader} style={styles.pizzaLoader} />
+            {this.state.showBackButton && <View>
+              <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', fontStyle: 'italic' }}>Taking too long?</Text>
+                <BackButton onPress={this.goHome} />
+              </View>
+            </View>}
           </View>
         )
     )
@@ -192,5 +226,18 @@ const styles = StyleSheet.create({
   loadingTextMedium: {
     fontSize: 25,
     fontStyle: 'italic'
+  },
+  backButton: {
+    width: 100,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    backgroundColor: 'red',
+    marginTop: 10
+  },
+  backText: {
+    textAlign: 'center',
+    color: 'yellow',
+    fontWeight: 'bold'
   }
 })
